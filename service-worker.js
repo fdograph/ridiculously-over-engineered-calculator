@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ridiculously-over-engineered-calculator/precache-manifest.da831d8f64e3ccc75d1c89f2ee753574.js"
+  "/ridiculously-over-engineered-calculator/precache-manifest.fbdb564c00983a27e52549a8876d6cb0.js"
 );
 
 self.addEventListener('message', (event) => {
