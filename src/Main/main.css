@@ -1,0 +1,9 @@
+#calc-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #333;
+  max-width: 95vw;
+  width: 60vh;
+  height: 95vh;
+}
