@@ -19,9 +19,9 @@
 }
 
 .keyboard {
+  flex: 1;
   display: grid;
   width: 100%;
-  height: 100%;
   grid-template:
     1fr 1fr 1fr 1fr 1fr /
     1fr 1fr 1fr 1fr;
