@@ -85,9 +85,9 @@ export default class Calculator extends DefaultCalculator {
 
   private applyCurrentOp(): Calculator {
     const currentOperation = this.get('currentOperation');
-    const safeInput = this.get('safeInput');
+    const safeInput = this.get<number>('safeInput', 0);
 
-    if (!currentOperation || safeInput === null) {
+    if (!currentOperation) {
       throw new Error('There is no open Operation');
     }
 
