@@ -176,4 +176,46 @@ describe('Calculator', () => {
 
     expect(calc.get('output')).toEqual('2.5');
   });
+
+  it('Should handle erratic operation chains gracefully', () => {
+    let calc = new Calculator()
+      .updateInput('100')
+      .addOperation(FormulaType.MULTIPLY)
+      .addOperation(FormulaType.SUM);
+
+    expect(calc.get('output')).toEqual('100');
+
+    calc = calc.updateInput('100').calculateResult();
+    expect(calc.get('output')).toEqual('200');
+
+    calc = calc
+      .updateInput('100')
+      .addOperation(FormulaType.MULTIPLY)
+      .addOperation(FormulaType.SUM)
+      .calculateResult();
+
+    expect(calc.get('output')).toEqual('100');
+
+    calc = calc
+      .updateInput('999')
+      .addOperation(FormulaType.MULTIPLY)
+      .addOperation(FormulaType.SUM)
+      .addOperation(FormulaType.DIVIDE)
+      .addOperation(FormulaType.SUBTRACT)
+      .updateInput('100')
+      .calculateResult();
+
+    expect(calc.get('output')).toEqual('899');
+
+    calc = calc
+      .updateInput('999')
+      .addOperation(FormulaType.MULTIPLY)
+      .addOperation(FormulaType.SUM)
+      .applyTransform(TransformationType.PLUSMINUS)
+      .addOperation(FormulaType.SUBTRACT)
+      .updateInput('100')
+      .calculateResult();
+
+    expect(calc.get('output')).toEqual('899');
+  });
 });

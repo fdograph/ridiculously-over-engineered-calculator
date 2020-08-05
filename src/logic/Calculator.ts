@@ -7,15 +7,23 @@ import {
 } from './formulas';
 import { Operation } from './Operation';
 
+enum ActionType {
+  OPERATION,
+  TRANSFORMATION,
+  INPUT,
+}
+
 interface ICalculator {
-  operations: List<Operation>;
-  currentOperation: Operation | null;
-  rawInput: List<string>;
-  safeInput: number | null;
-  output: string;
+  readonly lastActionType: ActionType | null;
+  readonly operations: List<Operation>;
+  readonly currentOperation: Operation | null;
+  readonly rawInput: List<string>;
+  readonly safeInput: number | null;
+  readonly output: string;
 }
 
 const DefaultCalculator = Record<ICalculator>({
+  lastActionType: null,
   operations: List<Operation>(),
   currentOperation: null,
   rawInput: List<string>(),
@@ -24,18 +32,22 @@ const DefaultCalculator = Record<ICalculator>({
 });
 
 export default class Calculator extends DefaultCalculator {
-  private getLastRelevantBase(): number {
+  private getLastValue(): number {
     const safeInput = this.get('safeInput');
     const currentOperation = this.get('currentOperation');
     const lastOperation = this.get('operations').last(null);
-    return safeInput !== null
-      ? safeInput
-      : currentOperation
-      ? currentOperation.get('base')
-      : lastOperation
-      ? lastOperation.get('result')!
-      : 0;
+
+    if (safeInput !== null) {
+      return safeInput;
+    } else if (currentOperation) {
+      return currentOperation.get('base');
+    } else if (lastOperation) {
+      return lastOperation.get<number>('result', 0);
+    }
+
+    return 0;
   }
+
   private getLastResult(): number {
     return this.get('operations').last<Operation>().get<number>('result', 0);
   }
@@ -98,10 +110,18 @@ export default class Calculator extends DefaultCalculator {
   }
 
   private closeAndOpenOp(base: number, type: FormulaType): Calculator {
+    const lastActionType = this.get('lastActionType');
     const currentOperation = this.get('currentOperation');
 
     if (!currentOperation) {
       throw new Error('There is no open Operation');
+    }
+
+    if (
+      lastActionType === ActionType.OPERATION ||
+      lastActionType === ActionType.TRANSFORMATION
+    ) {
+      return this.set('currentOperation', currentOperation.set('type', type));
     }
 
     const completeOperation = currentOperation.perform(base);
@@ -123,20 +143,26 @@ export default class Calculator extends DefaultCalculator {
 
     return this.update('rawInput', (chars) => chars.concat(userInput.split('')))
       .parseInput()
+      .set('lastActionType', ActionType.INPUT)
       .outputRaw();
   }
 
   public applyTransform(transform: TransformationType): Calculator {
     const currentOperation = this.get('currentOperation');
-    const input = this.getLastRelevantBase();
+    const input = this.getLastValue();
 
-    const base = currentOperation ? currentOperation.get('base') : input;
+    const lastValue = currentOperation ? currentOperation.get('base') : input;
 
     switch (transform) {
       case TransformationType.PLUSMINUS:
-        return this.set('safeInput', plusMinus(input)).outputSafe();
+        return this.set('safeInput', plusMinus(input))
+          .set('lastActionType', ActionType.TRANSFORMATION)
+          .outputSafe();
       case TransformationType.PERCENT:
-        return this.set('safeInput', percent(base, input));
+        return this.set('safeInput', percent(lastValue, input)).set(
+          'lastActionType',
+          ActionType.TRANSFORMATION
+        );
       default:
         throw new Error('Unknown transformation');
     }
@@ -144,14 +170,15 @@ export default class Calculator extends DefaultCalculator {
 
   public addOperation(type: FormulaType): Calculator {
     const currentOperation = this.get('currentOperation');
-    const base = this.getLastRelevantBase();
+    const base = this.getLastValue();
 
     return currentOperation
-      ? this.closeAndOpenOp(base, type).clearInput()
-      : this.set(
-          'currentOperation',
-          new Operation({ base, type })
-        ).clearInput();
+      ? this.closeAndOpenOp(base, type)
+          .clearInput()
+          .set('lastActionType', ActionType.OPERATION)
+      : this.set('currentOperation', new Operation({ base, type }))
+          .clearInput()
+          .set('lastActionType', ActionType.OPERATION);
   }
 
   public calculateResult(): Calculator {
