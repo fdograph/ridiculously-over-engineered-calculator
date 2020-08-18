@@ -26,6 +26,11 @@ jobs:
     - run: npm install
     - run: npm test --coverage
     - run: npm run build
+    run: |
+      echo "Test push commit to the remote in the workflow" >> test.txt
+
+      git config --global user.name "github-actions[bot]"
+      git config --global user.email "234343552+github-actions[bot]@users.noreply.github.com"
     - run: npm run deploy
       env:
         CI: true
