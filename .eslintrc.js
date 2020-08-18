@@ -15,17 +15,25 @@
 //     source: /node_modules/eslint-plugin-react/index.js
 
 module.exports = {
-  extends: ["react-app", "eslint:recommended", "plugin:react/recommended"],
+  extends: ['react-app', 'eslint:recommended', 'plugin:react/recommended'],
   rules: {
-    "max-len": "off", // Prettier is handling line length, no need for warnings
-    "no-else-return": "off", // Favor clarity over slightly less typing
-    "no-plusplus": [
+    'max-len': 'off', // Prettier is handling line length, no need for warnings
+    'no-else-return': 'off', // Favor clarity over slightly less typing
+    'no-plusplus': [
       // Allow i++ in classic-style for loops
-      "warn",
+      'warn',
       {
         allowForLoopAfterthoughts: true,
       },
     ],
-    "operator-assignment": "off", // Forcing shorthand is too restricting on style
+    'operator-assignment': 'off', // Forcing shorthand is too restricting on style
   },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 };

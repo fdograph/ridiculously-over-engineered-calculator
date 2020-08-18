@@ -32,6 +32,12 @@ const DefaultCalculator = Record<ICalculator>({
 });
 
 export default class Calculator extends DefaultCalculator {
+  public static readonly MAX_CHARACTERS = 22;
+
+  private hasCurrentOperation(): boolean {
+    return this.get('currentOperation') !== null;
+  }
+
   private getLastValue(): number {
     const safeInput = this.get('safeInput');
     const currentOperation = this.get('currentOperation');
@@ -141,17 +147,20 @@ export default class Calculator extends DefaultCalculator {
       userInput = userInput.replace('.', '');
     }
 
-    return this.update('rawInput', (chars) => chars.concat(userInput.split('')))
+    return this.update('rawInput', (chars) =>
+      chars.concat(userInput.split('')).slice(Calculator.MAX_CHARACTERS * -1)
+    )
       .parseInput()
       .set('lastActionType', ActionType.INPUT)
       .outputRaw();
   }
 
   public applyTransform(transform: TransformationType): Calculator {
-    const currentOperation = this.get('currentOperation');
     const input = this.getLastValue();
 
-    const lastValue = currentOperation ? currentOperation.get('base') : input;
+    const lastValue = this.hasCurrentOperation()
+      ? this.get('currentOperation')!.get('base')
+      : input;
 
     switch (transform) {
       case TransformationType.PLUSMINUS:
@@ -169,10 +178,9 @@ export default class Calculator extends DefaultCalculator {
   }
 
   public addOperation(type: FormulaType): Calculator {
-    const currentOperation = this.get('currentOperation');
     const base = this.getLastValue();
 
-    return currentOperation
+    return this.hasCurrentOperation()
       ? this.closeAndOpenOp(base, type)
           .clearInput()
           .set('lastActionType', ActionType.OPERATION)
@@ -182,9 +190,9 @@ export default class Calculator extends DefaultCalculator {
   }
 
   public calculateResult(): Calculator {
-    const currentOperation = this.get('currentOperation');
-
-    return currentOperation ? this.applyCurrentOp() : this.reApplyPrevOp();
+    return this.hasCurrentOperation()
+      ? this.applyCurrentOp()
+      : this.reApplyPrevOp();
   }
 
   public clearInput(): Calculator {

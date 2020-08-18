@@ -33,7 +33,7 @@ export class Operation extends DefaultOperation {
       case FormulaType.DIVIDE:
         return this.set('result', divide(base, input)).set('input', input);
       case FormulaType.NOOP:
-        return this.set('result', this.get('base')).set('input', input);
+        return this.set('result', base).set('input', input);
       default:
         throw new Error('Unknown operation');
     }

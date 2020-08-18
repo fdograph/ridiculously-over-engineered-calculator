@@ -7,23 +7,22 @@ export enum KeyType {
   INPUT = 'CALCULATOR/KEY/INPUT',
 }
 
-type CalcKeyProps = {
+interface ICalcKeyProps {
   type: KeyType;
   text: string;
   className?: string;
   onClick: () => void;
-};
+}
 
-const CalcKey: React.FC<CalcKeyProps> = ({
+const CalcKey: React.FunctionComponent<ICalcKeyProps> = ({
   type,
   text,
   onClick,
   className,
-}: CalcKeyProps) => {
+}) => {
   return (
     <button
-      className={classNames(className, {
-        key: true,
+      className={classNames(className, 'key', {
         'key--transform': type === KeyType.TRANSFORM,
         'key--operation': type === KeyType.OPERATION,
         'key--input': type === KeyType.INPUT,

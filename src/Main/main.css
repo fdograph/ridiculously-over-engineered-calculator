@@ -7,4 +7,6 @@
   max-width: 95vw;
   width: 60vh;
   height: 95%;
+  overflow: hidden;
+  border-radius: 5px;
 }
