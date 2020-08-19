@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a7ecc7abc1230a461b8a629ddff72074",
+    "revision": "8a0f2b31387a80f888ffb027725c5710",
     "url": "/ridiculously-over-engineered-calculator/index.html"
   },
   {
-    "revision": "6ed3f666ef5c0bd0667d",
+    "revision": "fa415f2d60162542ad12",
     "url": "/ridiculously-over-engineered-calculator/static/css/main.1a9111f0.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ridiculously-over-engineered-calculator/static/js/2.220429d5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6ed3f666ef5c0bd0667d",
-    "url": "/ridiculously-over-engineered-calculator/static/js/main.2891a444.chunk.js"
+    "revision": "fa415f2d60162542ad12",
+    "url": "/ridiculously-over-engineered-calculator/static/js/main.3576e5c8.chunk.js"
   },
   {
     "revision": "698e33752dd6092482d7",

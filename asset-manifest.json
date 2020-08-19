@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ridiculously-over-engineered-calculator/static/css/main.1a9111f0.chunk.css",
-    "main.js": "/ridiculously-over-engineered-calculator/static/js/main.2891a444.chunk.js",
-    "main.js.map": "/ridiculously-over-engineered-calculator/static/js/main.2891a444.chunk.js.map",
+    "main.js": "/ridiculously-over-engineered-calculator/static/js/main.3576e5c8.chunk.js",
+    "main.js.map": "/ridiculously-over-engineered-calculator/static/js/main.3576e5c8.chunk.js.map",
     "runtime-main.js": "/ridiculously-over-engineered-calculator/static/js/runtime-main.9405a397.js",
     "runtime-main.js.map": "/ridiculously-over-engineered-calculator/static/js/runtime-main.9405a397.js.map",
     "static/js/2.220429d5.chunk.js": "/ridiculously-over-engineered-calculator/static/js/2.220429d5.chunk.js",
     "static/js/2.220429d5.chunk.js.map": "/ridiculously-over-engineered-calculator/static/js/2.220429d5.chunk.js.map",
     "index.html": "/ridiculously-over-engineered-calculator/index.html",
-    "precache-manifest.1dd7f7efa2e5beedfc9b990e492bbd95.js": "/ridiculously-over-engineered-calculator/precache-manifest.1dd7f7efa2e5beedfc9b990e492bbd95.js",
+    "precache-manifest.71afa9ec9a2910d1d7c0f7ed72c39b6c.js": "/ridiculously-over-engineered-calculator/precache-manifest.71afa9ec9a2910d1d7c0f7ed72c39b6c.js",
     "service-worker.js": "/ridiculously-over-engineered-calculator/service-worker.js",
     "static/css/main.1a9111f0.chunk.css.map": "/ridiculously-over-engineered-calculator/static/css/main.1a9111f0.chunk.css.map",
     "static/js/2.220429d5.chunk.js.LICENSE.txt": "/ridiculously-over-engineered-calculator/static/js/2.220429d5.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.9405a397.js",
     "static/js/2.220429d5.chunk.js",
     "static/css/main.1a9111f0.chunk.css",
-    "static/js/main.2891a444.chunk.js"
+    "static/js/main.3576e5c8.chunk.js"
   ]
 }
