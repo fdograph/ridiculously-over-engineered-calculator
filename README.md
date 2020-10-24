@@ -4,6 +4,7 @@ As the title says, this is a ridiculously over engineered calculator built with 
 
 [Try it!](http://fdograph.github.io/ridiculously-over-engineered-calculator)
 
+:)
 
 
 
